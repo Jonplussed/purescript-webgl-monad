@@ -1,0 +1,23 @@
+{
+  "name":         "purescript-webgl",
+  "description":  "a monad for WebGL methods",
+  "version":      "0.1.0",
+  "license":      "MIT",
+
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "dist"
+  ],
+
+  "dependencies": {
+    "purescript-arraybuffer-types":     "0.1.*",
+    "purescript-canvas":                "0.2.*",
+    "purescript-either":                "0.1.*",
+    "purescript-monad-eff":             "0.1.*",
+    "purescript-transformers":          "0.5.*",
+    "purescript-typedarray":            "0.3.*",
+    "purescript-webgl-raw":             "git@github.com:Jonplussed/purescript-webgl-raw.git#v0.3.0"
+  }
+}

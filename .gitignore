@@ -1,0 +1,15 @@
+dist/
+/.dist-buildwrapper
+/*.lkshf
+/*.lkshs
+.hpc/
+/.DS_Store
+*~
+*.tix
+*.project
+.cabal-sandbox
+cabal.sandbox.config
+node_modules/
+bower_components/
+.psci
+output/

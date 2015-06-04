@@ -1,0 +1,16 @@
+{
+  "name":         "purescript-webgl",
+  "description":  "a monad for WebGL methods",
+  "version":      "0.1.0",
+  "license":      "MIT",
+
+  "repository": {
+    "type": "git",
+    "url":  "https://github.com/Jonplussed/purescript-webgl-raw"
+  },
+
+  "dependencies": {
+    "grunt":                "^0.4.5",
+    "grunt-purescript":     "^0.6.0"
+  }
+}
