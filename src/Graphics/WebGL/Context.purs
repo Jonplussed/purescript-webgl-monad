@@ -1,5 +1,5 @@
 module Graphics.WebGL.Context
-( defaultWebglContextAttributes
+( defaultWebglContextAttrs
 , getWebglContext
 , getWebglContextWithAttrs
 ) where
@@ -13,8 +13,8 @@ import qualified Graphics.WebGL.Raw.Types as Raw
 
 import Graphics.WebGL.Types
 
-defaultWebglContextAttributes :: Raw.WebGLContextAttributes
-defaultWebglContextAttributes =
+defaultWebglContextAttrs :: Raw.WebGLContextAttributes
+defaultWebglContextAttrs =
   { alpha:                            true
   , depth:                            true
   , stencil:                          false
@@ -29,12 +29,12 @@ getWebglContextWithAttrs :: forall eff. CanvasElement -> Raw.WebGLContextAttribu
 getWebglContextWithAttrs canvas attrs = runFn4 getWebglContextWithAttrsImpl canvas attrs Just Nothing
 
 getWebglContext :: forall eff. CanvasElement -> Eff (canvas :: Canvas | eff) (Maybe Raw.WebGLContext)
-getWebglContext canvas = getWebglContextWithAttrs canvas defaultWebglContextAttributes
+getWebglContext canvas = getWebglContextWithAttrs canvas defaultWebglContextAttrs
 
 -- foreigns
 
 foreign import getWebglContextWithAttrsImpl """
-  function getWebglContextImpl(canvas, attrs, Just, Nothing) {
+  function getWebglContextWithAttrsImpl(canvas, attrs, Just, Nothing) {
     return function () {
       try {
         return Just(
