@@ -41,3 +41,11 @@ instance fromWebglEnumErrorCode :: FromWebGLEnum ErrorCode where
       | n == Enum.invalidValue      = InvalidValue
       | n == Enum.invalidOperation  = InvalidOperation
       | otherwise                   = UnknownError
+
+instance showErrorCode :: Show ErrorCode where
+  show NoError          = "no error"
+  show InvalidEnum      = "invalid enum"
+  show InvalidValue     = "invalid value"
+  show InvalidOperation = "invalid operation"
+  show OutOfMemory      = "out of memory"
+  show _                = "unknown error"
