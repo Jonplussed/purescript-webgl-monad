@@ -24,5 +24,5 @@ debug = do
     hasErr NoError = false
     hasErr _       = true
 
-runWebgl :: forall a. WebGL a -> Raw.WebGLContext -> Eff (canvas :: Canvas) (Either ErrorCode a)
+runWebgl :: forall eff a. WebGL a -> Raw.WebGLContext -> Eff (canvas :: Canvas | eff) (Either ErrorCode a)
 runWebgl prog ctx = runErrorT $ runReaderT prog ctx

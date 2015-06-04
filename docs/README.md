@@ -12,7 +12,7 @@ debug :: WebGL Unit
 #### `runWebgl`
 
 ``` purescript
-runWebgl :: forall a. WebGL a -> Raw.WebGLContext -> Eff (canvas :: Canvas) (Either ErrorCode a)
+runWebgl :: forall eff a. WebGL a -> Raw.WebGLContext -> Eff (canvas :: Canvas | eff) (Either ErrorCode a)
 ```
 
 
@@ -29,14 +29,14 @@ defaultWebglContextAttributes :: Raw.WebGLContextAttributes
 #### `getWebglContextWithAttrs`
 
 ``` purescript
-getWebglContextWithAttrs :: CanvasElement -> Raw.WebGLContextAttributes -> Eff (canvas :: Canvas) (Maybe Raw.WebGLContext)
+getWebglContextWithAttrs :: forall eff. CanvasElement -> Raw.WebGLContextAttributes -> Eff (canvas :: Canvas | eff) (Maybe Raw.WebGLContext)
 ```
 
 
 #### `getWebglContext`
 
 ``` purescript
-getWebglContext :: CanvasElement -> Eff (canvas :: Canvas) (Maybe Raw.WebGLContext)
+getWebglContext :: forall eff. CanvasElement -> Eff (canvas :: Canvas | eff) (Maybe Raw.WebGLContext)
 ```
 
 
@@ -77,7 +77,7 @@ isContextLost :: WebGL Boolean
 #### `WebGL`
 
 ``` purescript
-type WebGL a = ReaderT Raw.WebGLContext (ErrorT ErrorCode (Eff (canvas :: Canvas))) a
+type WebGL a = forall eff. ReaderT Raw.WebGLContext (ErrorT ErrorCode (Eff (canvas :: Canvas | eff))) a
 ```
 
 
@@ -131,4 +131,11 @@ data ErrorCode
 
 ``` purescript
 instance fromWebglEnumErrorCode :: FromWebGLEnum ErrorCode
+```
+
+
+#### `showErrorCode`
+
+``` purescript
+instance showErrorCode :: Show ErrorCode
 ```

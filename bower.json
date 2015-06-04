@@ -19,6 +19,6 @@
     "purescript-monad-eff":             "0.1.*",
     "purescript-transformers":          "0.5.*",
     "purescript-typedarray":            "0.3.*",
-    "purescript-webgl-raw":             "git@github.com:Jonplussed/purescript-webgl-raw.git#v0.3.0"
+    "purescript-webgl-raw":             "git@github.com:Jonplussed/purescript-webgl-raw.git"
   }
 }

@@ -8,7 +8,7 @@ import Graphics.Canvas (Canvas ())
 import qualified Graphics.WebGL.Raw.Enums as Enum
 import qualified Graphics.WebGL.Raw.Types as Raw
 
-type WebGL a = ReaderT Raw.WebGLContext (ErrorT ErrorCode (Eff (canvas :: Canvas))) a
+type WebGL a = forall eff. ReaderT Raw.WebGLContext (ErrorT ErrorCode (Eff (canvas :: Canvas | eff))) a
 
 class ToWebGLEnum a where
   toWebglEnum :: a -> Number

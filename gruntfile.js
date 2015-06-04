@@ -9,12 +9,16 @@ module.exports = function(grunt) {
     ],
 
     dotPsci: ["<%=srcFiles%>"],
-    pscMake: ["<%=srcFiles%>"],
 
     psc: {
       options: {
         modules: 'Graphics.WebGL',
         main: 'Graphics.WebGL'
+      },
+
+      all: {
+        src: ["<%=srcFiles%>"],
+        dest: "dist/compiled.js"
       }
     },
 
@@ -24,6 +28,13 @@ module.exports = function(grunt) {
         dest: "docs/README.md"
       }
     },
+
+    pscMake: {
+      all: {
+        src: ["<%=srcFiles%>"],
+        dest: "dist/modules"
+      }
+    }
 
   });
 

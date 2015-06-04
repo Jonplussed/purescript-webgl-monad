@@ -25,10 +25,10 @@ defaultWebglContextAttributes =
   , failIfMajorPerformanceCaveat:     false
   }
 
-getWebglContextWithAttrs :: CanvasElement -> Raw.WebGLContextAttributes -> Eff (canvas :: Canvas) (Maybe Raw.WebGLContext)
+getWebglContextWithAttrs :: forall eff. CanvasElement -> Raw.WebGLContextAttributes -> Eff (canvas :: Canvas | eff) (Maybe Raw.WebGLContext)
 getWebglContextWithAttrs canvas attrs = runFn4 getWebglContextWithAttrsImpl canvas attrs Just Nothing
 
-getWebglContext :: CanvasElement -> Eff (canvas :: Canvas) (Maybe Raw.WebGLContext)
+getWebglContext :: forall eff. CanvasElement -> Eff (canvas :: Canvas | eff) (Maybe Raw.WebGLContext)
 getWebglContext canvas = getWebglContextWithAttrs canvas defaultWebglContextAttributes
 
 -- foreigns
@@ -45,4 +45,4 @@ foreign import getWebglContextWithAttrsImpl """
       };
     }
   }
-""" :: forall maybe. Fn4 CanvasElement Raw.WebGLContextAttributes (Raw.WebGLContext -> maybe) maybe (Eff (canvas :: Canvas) (Maybe Raw.WebGLContext))
+""" :: forall eff maybe. Fn4 CanvasElement Raw.WebGLContextAttributes (Raw.WebGLContext -> maybe) maybe (Eff (canvas :: Canvas | eff) (Maybe Raw.WebGLContext))
