@@ -74,3 +74,8 @@ shaderSource :: WebGLShader -> String -> WebGL Unit
 shaderSource shader src = do
     ctx <- ask
     liftEff $ Raw.shaderSource ctx shader src
+
+useProgram :: WebGLProgram -> WebGL Unit
+useProgram prog = do
+    ctx <- ask
+    liftEff $ Raw.useProgram ctx prog

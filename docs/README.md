@@ -178,19 +178,20 @@ shaderSource :: WebGLShader -> String -> WebGL Unit
 ```
 
 
-
-## Module Graphic.WebGL.Shader
-
-#### `shaderLinkError`
+#### `useProgram`
 
 ``` purescript
-shaderLinkError :: WebGLError
+useProgram :: WebGLProgram -> WebGL Unit
 ```
 
-#### `useShaders`
+
+
+## Module Graphics.WebGL.Shader
+
+#### `programShaders`
 
 ``` purescript
-useShaders :: String -> String -> WebGL Raw.WebGLProgram
+programShaders :: String -> String -> WebGL Raw.WebGLProgram
 ```
 
 
