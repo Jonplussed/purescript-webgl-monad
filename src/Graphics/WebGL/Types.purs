@@ -8,7 +8,14 @@ import Graphics.Canvas (Canvas ())
 import qualified Graphics.WebGL.Raw.Enums as Enum
 import qualified Graphics.WebGL.Raw.Types as Raw
 
-type WebGL a = forall eff. ReaderT Raw.WebGLContext (ErrorT ErrorCode (Eff (canvas :: Canvas | eff))) a
+type WebGL a = forall eff. ReaderT Raw.WebGLContext (ErrorT WebGLError (Eff (canvas :: Canvas | eff))) a
+
+data WebGLError
+  = ContextLost
+  | NullValue String
+  | ErrorCode ErrorCode
+
+-- wrapped GLenums
 
 class ToWebGLEnum a where
   toWebglEnum :: a -> Number
@@ -22,8 +29,8 @@ data BufferType
   | StencilBuffer
 
 instance toWebglEnumBufferType :: ToWebGLEnum BufferType where
-  toWebglEnum DepthBuffer = Enum.depthBufferBit
-  toWebglEnum ColorBuffer = Enum.colorBufferBit
+  toWebglEnum DepthBuffer   = Enum.depthBufferBit
+  toWebglEnum ColorBuffer   = Enum.colorBufferBit
   toWebglEnum StencilBuffer = Enum.stencilBufferBit
 
 data ErrorCode
@@ -49,3 +56,27 @@ instance showErrorCode :: Show ErrorCode where
   show InvalidOperation = "invalid operation"
   show OutOfMemory      = "out of memory"
   show _                = "unknown error"
+
+data ProgramParam
+  = DeleteStatus
+  | LinkStatus
+  | ValidateStatus
+  | AttachedShaders
+  | ActiveAttrs
+  | ActiveUniforms
+
+instance toWebglEnumProgramParam :: ToWebGLEnum ProgramParam where
+  toWebglEnum DeleteStatus    = Enum.deleteStatus
+  toWebglEnum LinkStatus      = Enum.linkStatus
+  toWebglEnum ValidateStatus  = Enum.validateStatus
+  toWebglEnum AttachedShaders = Enum.attachedShaders
+  toWebglEnum ActiveAttrs     = Enum.activeAttributes
+  toWebglEnum ActiveUniforms  = Enum.activeUniforms
+
+data ShaderType
+  = FragmentShader
+  | VertexShader
+
+instance toWebglEnumShader :: ToWebGLEnum ShaderType where
+  toWebglEnum FragmentShader = Enum.fragmentShader
+  toWebglEnum VertexShader   = Enum.vertexShader

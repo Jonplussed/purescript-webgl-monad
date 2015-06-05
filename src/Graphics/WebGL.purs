@@ -19,10 +19,10 @@ debug :: WebGL Unit
 debug = do
     hasCtx <- not <$> isContextLost
     err <- fromWebglEnum <$> getError
-    when (hasCtx && hasErr err) (throwError err)
+    when (hasCtx && hasErr err) (throwError $ ErrorCode err)
   where
     hasErr NoError = false
     hasErr _       = true
 
-runWebgl :: forall eff a. WebGL a -> Raw.WebGLContext -> Eff (canvas :: Canvas | eff) (Either ErrorCode a)
+runWebgl :: forall eff a. WebGL a -> Raw.WebGLContext -> Eff (canvas :: Canvas | eff) (Either WebGLError a)
 runWebgl prog ctx = runErrorT $ runReaderT prog ctx
