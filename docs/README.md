@@ -97,7 +97,7 @@ data Mat4
 #### `attachShader`
 
 ``` purescript
-attachShader :: Raw.WebGLProgram -> Raw.WebGLShader -> WebGL Unit
+attachShader :: WebGLProgram -> WebGLShader -> WebGL Unit
 ```
 
 
@@ -118,21 +118,21 @@ clearColor :: Number -> Number -> Number -> Number -> WebGL Unit
 #### `compileShader`
 
 ``` purescript
-compileShader :: Raw.WebGLShader -> WebGL Unit
+compileShader :: WebGLShader -> WebGL Unit
 ```
 
 
 #### `createProgram`
 
 ``` purescript
-createProgram :: WebGL Raw.WebGLProgram
+createProgram :: WebGL WebGLProgram
 ```
 
 
 #### `createShader`
 
 ``` purescript
-createShader :: ShaderType -> WebGL Raw.WebGLShader
+createShader :: ShaderType -> WebGL WebGLShader
 ```
 
 
@@ -146,7 +146,7 @@ getError :: WebGL Number
 #### `getProgramParameter`
 
 ``` purescript
-getProgramParameter :: forall a. Raw.WebGLProgram -> ProgramParam -> WebGL a
+getProgramParameter :: forall a. WebGLProgram -> ProgramParam -> WebGL a
 ```
 
 
@@ -160,14 +160,14 @@ isContextLost :: WebGL Boolean
 #### `linkProgram`
 
 ``` purescript
-linkProgram :: Raw.WebGLProgram -> WebGL Unit
+linkProgram :: WebGLProgram -> WebGL Unit
 ```
 
 
 #### `shaderSource`
 
 ``` purescript
-shaderSource :: Raw.WebGLShader -> String -> WebGL Unit
+shaderSource :: WebGLShader -> String -> WebGL Unit
 ```
 
 
@@ -204,6 +204,33 @@ data WebGLError
   | NullValue String
   | ShaderError String
   | ErrorCode ErrorCode
+```
+
+
+#### `WebGLContext`
+
+``` purescript
+type WebGLContext = Raw.WebGLContext
+```
+
+#### `WebGLContextAttributes`
+
+``` purescript
+type WebGLContextAttributes = Raw.WebGLContextAttributes
+```
+
+
+#### `WebGLProgram`
+
+``` purescript
+type WebGLProgram = Raw.WebGLProgram
+```
+
+
+#### `WebGLShader`
+
+``` purescript
+type WebGLShader = Raw.WebGLShader
 ```
 
 

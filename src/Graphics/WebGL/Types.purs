@@ -16,6 +16,13 @@ data WebGLError
   | ShaderError String
   | ErrorCode ErrorCode
 
+-- re-exported from Raw
+
+type WebGLContext = Raw.WebGLContext
+type WebGLContextAttributes = Raw.WebGLContextAttributes
+type WebGLProgram = Raw.WebGLProgram
+type WebGLShader = Raw.WebGLShader
+
 -- wrapped GLenums
 
 class ToWebGLEnum a where
