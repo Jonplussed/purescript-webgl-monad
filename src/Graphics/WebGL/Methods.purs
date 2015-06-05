@@ -46,6 +46,11 @@ createShader stype = do
       Just shader -> return shader
       Nothing -> throwError $ NullValue "createShader"
 
+drawArrays :: DrawMode -> Number -> Number -> WebGL Unit
+drawArrays mode first count = do
+    ctx <- ask
+    liftEff $ Raw.drawArrays ctx (toWebglEnum mode) first count
+
 getError :: WebGL Number
 getError = ask >>= Raw.getError >>> liftEff
 

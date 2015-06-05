@@ -50,6 +50,24 @@ instance toWebglEnumBufferType :: ToWebGLEnum BufferType where
   toWebglEnum ColorBuffer   = Enum.colorBufferBit
   toWebglEnum StencilBuffer = Enum.stencilBufferBit
 
+data DrawMode
+  = Points
+  | Lines
+  | LineLoop
+  | LineStrip
+  | Triangles
+  | TriangleStrip
+  | TriangleFan
+
+instance toWebglEnumDrawMode :: ToWebGLEnum DrawMode where
+  toWebglEnum Points        = Enum.points
+  toWebglEnum Lines         = Enum.lines
+  toWebglEnum LineLoop      = Enum.lineLoop
+  toWebglEnum LineStrip     = Enum.lineStrip
+  toWebglEnum Triangles     = Enum.triangles
+  toWebglEnum TriangleStrip = Enum.triangleStrip
+  toWebglEnum TriangleFan   = Enum.triangleFan
+
 data ErrorCode
   = NoError
   | InvalidEnum

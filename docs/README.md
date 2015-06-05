@@ -136,6 +136,13 @@ createShader :: ShaderType -> WebGL WebGLShader
 ```
 
 
+#### `drawArrays`
+
+``` purescript
+drawArrays :: DrawMode -> Number -> Number -> WebGL Unit
+```
+
+
 #### `getError`
 
 ``` purescript
@@ -270,6 +277,27 @@ data BufferType
 
 ``` purescript
 instance toWebglEnumBufferType :: ToWebGLEnum BufferType
+```
+
+
+#### `DrawMode`
+
+``` purescript
+data DrawMode
+  = Points 
+  | Lines 
+  | LineLoop 
+  | LineStrip 
+  | Triangles 
+  | TriangleStrip 
+  | TriangleFan 
+```
+
+
+#### `toWebglEnumDrawMode`
+
+``` purescript
+instance toWebglEnumDrawMode :: ToWebGLEnum DrawMode
 ```
 
 
