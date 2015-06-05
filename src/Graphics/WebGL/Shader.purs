@@ -1,4 +1,4 @@
-module Graphic.WebGL.Shader where
+module Graphics.WebGL.Shader where
 
 import Control.Monad.Error.Class (throwError)
 
