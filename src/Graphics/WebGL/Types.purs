@@ -13,6 +13,7 @@ type WebGL a = forall eff. ReaderT Raw.WebGLContext (ErrorT WebGLError (Eff (can
 data WebGLError
   = ContextLost
   | NullValue String
+  | ShaderError String
   | ErrorCode ErrorCode
 
 -- wrapped GLenums

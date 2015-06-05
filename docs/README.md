@@ -174,6 +174,18 @@ shaderSource :: Raw.WebGLShader -> String -> WebGL Unit
 
 ## Module Graphic.WebGL.Shader
 
+#### `shaderLinkError`
+
+``` purescript
+shaderLinkError :: WebGLError
+```
+
+#### `useShaders`
+
+``` purescript
+useShaders :: String -> String -> WebGL Raw.WebGLProgram
+```
+
 
 ## Module Graphics.WebGL.Types
 
@@ -190,6 +202,7 @@ type WebGL a = forall eff. ReaderT Raw.WebGLContext (ErrorT WebGLError (Eff (can
 data WebGLError
   = ContextLost 
   | NullValue String
+  | ShaderError String
   | ErrorCode ErrorCode
 ```
 
