@@ -12,9 +12,18 @@ type WebGL a = forall eff. ReaderT Raw.WebGLContext (ErrorT WebGLError (Eff (can
 
 data WebGLError
   = ContextLost
+  | ErrorCode ErrorCode
   | NullValue String
   | ShaderError String
-  | ErrorCode ErrorCode
+
+instance showWebGLError :: Show WebGLError where
+  show err = case err of
+      ContextLost     -> prefix ++ "lost the WebGL context"
+      ErrorCode code  -> prefix ++ show code
+      NullValue fname -> prefix ++ "null value in" ++ fname ++ "(due to an OpenGL error)"
+      ShaderError str -> prefix ++ str
+    where
+      prefix = "WebGL Error: "
 
 -- re-exported from Raw
 

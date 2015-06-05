@@ -201,9 +201,16 @@ type WebGL a = forall eff. ReaderT Raw.WebGLContext (ErrorT WebGLError (Eff (can
 ``` purescript
 data WebGLError
   = ContextLost 
+  | ErrorCode ErrorCode
   | NullValue String
   | ShaderError String
-  | ErrorCode ErrorCode
+```
+
+
+#### `showWebGLError`
+
+``` purescript
+instance showWebGLError :: Show WebGLError
 ```
 
 
