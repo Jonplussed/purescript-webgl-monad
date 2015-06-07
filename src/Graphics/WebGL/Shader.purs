@@ -67,23 +67,25 @@ getUniformBindings prog = do
 
 foreign import getAttrBindingsImpl """
   function getAttrBindingsImpl(ctx, prog) {
-    var attr, attrs, count, loc;
+    return function () {
+      var attr, attrs, count, loc;
 
-    try {
-      attrs = {};
-      count = ctx.getProgramParameter(prog, ctx.ACTIVE_ATTRIBUTES);
+      try {
+        attrs = {};
+        count = ctx.getProgramParameter(prog, ctx.ACTIVE_ATTRIBUTES);
 
-      for (var i = 0; i < count; i++) {
-        attr = ctx.getActiveAttrib(prog, i);
-        loc = ctx.getAttribLocation(prog, attr.name);
-        ctx.enableVertexAttribArray(loc);
-        attrs[attr.name] = attr;
+        for (var i = 0; i < count; i++) {
+          attr = ctx.getActiveAttrib(prog, i);
+          loc = ctx.getAttribLocation(prog, attr.name);
+          ctx.enableVertexAttribArray(loc);
+          attrs[attr.name] = attr;
+        }
+
+        return attrs;
+      } catch(e) {
+        return null;
       }
-
-      return attrs;
-    } catch(e) {
-      return null;
-    }
+    };
   }
 """ :: forall eff bindings. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) (Object bindings))
 
@@ -92,21 +94,23 @@ getAttrBindings' ctx prog = runFn2 getAttrBindingsImpl ctx prog >>= toMaybe >>> 
 
 foreign import getUniformBindingsImpl """
   function getUniformBindingsImpl(ctx, prog) {
-    var unif, unifs, count;
+    return function () {
+      var unif, unifs, count;
 
-    try {
-      unifs = {};
-      count = ctx.getProgramParameter(pro, ctx.ACTIVE_UNIFORMS);
+      try {
+        unifs = {};
+        count = ctx.getProgramParameter(pro, ctx.ACTIVE_UNIFORMS);
 
-      for (var i = 0; i < count; i++) {
-        unif = ctx.getActiveUniform(prog, i);
-        unifs[unif.name] = unifs;
+        for (var i = 0; i < count; i++) {
+          unif = ctx.getActiveUniform(prog, i);
+          unifs[unif.name] = unifs;
+        }
+
+        return unifs;
+      } catch(e) {
+        return null;
       }
-
-      return unifs;
-    } catch(e) {
-      return null;
-    }
+    };
   }
 """ :: forall eff bindings. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) (Object bindings))
 
