@@ -2,7 +2,6 @@ module Graphics.WebGL.Methods where
 
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Reader.Class (ask)
-import Control.Monad.Reader.Trans (liftReaderT)
 import Control.Monad.Error.Class (throwError)
 import Data.Maybe (Maybe (..))
 
@@ -61,6 +60,16 @@ getProgramParameter prog param = do
     case result of
       Just val -> return val
       Nothing -> throwError $ NullValue "getProgramParameter"
+
+vertexAttrib1f :: Attribute Number -> Number -> WebGL Unit
+vertexAttrib1f (Attribute attr) x = do
+    ctx <- ask
+    liftEff $ Raw.vertexAttrib1f ctx attr x
+
+vertexAttrib3f :: Attribute Number -> Number -> Number -> Number -> WebGL Unit
+vertexAttrib3f (Attribute attr) x y z = do
+    ctx <- ask
+    liftEff $ Raw.vertexAttrib3f ctx attr x y z
 
 isContextLost :: WebGL Boolean
 isContextLost = ask >>= Raw.isContextLost >>> liftEff

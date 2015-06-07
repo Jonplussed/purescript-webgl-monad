@@ -52,8 +52,8 @@ data Mat4 = Mat4    Number Number Number Number
 
 -- attributes and uniforms
 
-data Attribute valueType
-data Uniform valueType
+data Attribute a = Attribute Number
+data Uniform a = Uniform Number
 
 -- wrapped GLenums
 
