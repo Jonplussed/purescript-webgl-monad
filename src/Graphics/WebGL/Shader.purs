@@ -10,7 +10,7 @@ import Control.Monad.Eff (Eff ())
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Error.Class (throwError)
 import Control.Monad.Reader.Class (ask)
-import Data.Function (Fn2 (..), runFn2)
+import Data.Function (Fn3 (..), runFn3)
 import Data.Maybe (Maybe (..))
 import Graphics.Canvas (Canvas ())
 import Graphics.WebGL.Raw.Util (toMaybe)
@@ -66,7 +66,7 @@ getUniformBindings prog = do
 -- foreigns
 
 foreign import getAttrBindingsImpl """
-  function getAttrBindingsImpl(ctx, prog) {
+  function getAttrBindingsImpl(ctx, prog, wrapper) {
     return function () {
       var attr, attrs, count, loc;
 
@@ -78,7 +78,7 @@ foreign import getAttrBindingsImpl """
           attr = ctx.getActiveAttrib(prog, i);
           loc = ctx.getAttribLocation(prog, attr.name);
           ctx.enableVertexAttribArray(loc);
-          attrs[attr.name] = attr;
+          attrs[attr.name] = wrapper(loc);
         }
 
         return attrs;
@@ -87,13 +87,13 @@ foreign import getAttrBindingsImpl """
       }
     };
   }
-""" :: forall eff bindings. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) (Object bindings))
+""" :: forall eff bindings a. Fn3 WebGLContext WebGLProgram (Number -> Attribute a) (Eff (canvas :: Canvas | eff) (Object bindings))
 
-getAttrBindings' :: forall eff bindings. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) (Maybe (Object bindings))
-getAttrBindings' ctx prog = runFn2 getAttrBindingsImpl ctx prog >>= toMaybe >>> return
+getAttrBindings' :: forall eff bindings a. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) (Maybe (Object bindings))
+getAttrBindings' ctx prog = runFn3 getAttrBindingsImpl ctx prog Attribute >>= toMaybe >>> return
 
 foreign import getUniformBindingsImpl """
-  function getUniformBindingsImpl(ctx, prog) {
+  function getUniformBindingsImpl(ctx, prog, wrapper) {
     return function () {
       var unif, unifs, count;
 
@@ -103,7 +103,8 @@ foreign import getUniformBindingsImpl """
 
         for (var i = 0; i < count; i++) {
           unif = ctx.getActiveUniform(prog, i);
-          unifs[unif.name] = unifs;
+          loc = ctx.getUniformLocation(prog, unif.name);
+          unifs[unif.name] = wrapper(loc);
         }
 
         return unifs;
@@ -112,7 +113,7 @@ foreign import getUniformBindingsImpl """
       }
     };
   }
-""" :: forall eff bindings. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) (Object bindings))
+""" :: forall eff bindings a. Fn3 WebGLContext WebGLProgram (Number -> Uniform a) (Eff (canvas :: Canvas | eff) (Object bindings))
 
-getUniformBindings' :: forall eff bindings. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) (Maybe (Object bindings))
-getUniformBindings' ctx prog = runFn2 getUniformBindingsImpl ctx prog >>= toMaybe >>> return
+getUniformBindings' :: forall eff bindings a. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) (Maybe (Object bindings))
+getUniformBindings' ctx prog = runFn3 getUniformBindingsImpl ctx prog Uniform >>= toMaybe >>> return
