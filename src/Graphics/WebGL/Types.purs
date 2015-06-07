@@ -32,6 +32,29 @@ type WebGLContextAttributes = Raw.WebGLContextAttributes
 type WebGLProgram = Raw.WebGLProgram
 type WebGLShader = Raw.WebGLShader
 
+-- math (this should and will come from a separate library)
+
+data Vec2 = Vec2    Number Number
+data Vec3 = Vec3    Number Number Number
+data Vec4 = Vec4    Number Number Number Number
+
+data Mat2 = Mat2    Number Number
+                    Number Number
+
+data Mat3 = Mat3    Number Number Number
+                    Number Number Number
+                    Number Number Number
+
+data Mat4 = Mat4    Number Number Number Number
+                    Number Number Number Number
+                    Number Number Number Number
+                    Number Number Number Number
+
+-- attributes and uniforms
+
+data Attribute valueType
+data Uniform valueType
+
 -- wrapped GLenums
 
 class ToWebGLEnum a where

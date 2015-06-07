@@ -9,11 +9,9 @@ import Data.Function (Fn4 (..), runFn4)
 import Data.Maybe (Maybe (..))
 import Graphics.Canvas (Canvas (), CanvasElement ())
 
-import qualified Graphics.WebGL.Raw.Types as Raw
-
 import Graphics.WebGL.Types
 
-defaultWebglContextAttrs :: Raw.WebGLContextAttributes
+defaultWebglContextAttrs :: WebGLContextAttributes
 defaultWebglContextAttrs =
   { alpha:                            true
   , depth:                            true
@@ -25,10 +23,10 @@ defaultWebglContextAttrs =
   , failIfMajorPerformanceCaveat:     false
   }
 
-getWebglContextWithAttrs :: forall eff. CanvasElement -> Raw.WebGLContextAttributes -> Eff (canvas :: Canvas | eff) (Maybe Raw.WebGLContext)
+getWebglContextWithAttrs :: forall eff. CanvasElement -> WebGLContextAttributes -> Eff (canvas :: Canvas | eff) (Maybe WebGLContext)
 getWebglContextWithAttrs canvas attrs = runFn4 getWebglContextWithAttrsImpl canvas attrs Just Nothing
 
-getWebglContext :: forall eff. CanvasElement -> Eff (canvas :: Canvas | eff) (Maybe Raw.WebGLContext)
+getWebglContext :: forall eff. CanvasElement -> Eff (canvas :: Canvas | eff) (Maybe WebGLContext)
 getWebglContext canvas = getWebglContextWithAttrs canvas defaultWebglContextAttrs
 
 -- foreigns
@@ -45,4 +43,4 @@ foreign import getWebglContextWithAttrsImpl """
       };
     }
   }
-""" :: forall eff maybe. Fn4 CanvasElement Raw.WebGLContextAttributes (Raw.WebGLContext -> maybe) maybe (Eff (canvas :: Canvas | eff) (Maybe Raw.WebGLContext))
+""" :: forall eff maybe. Fn4 CanvasElement WebGLContextAttributes (WebGLContext -> maybe) maybe (Eff (canvas :: Canvas | eff) (Maybe WebGLContext))
