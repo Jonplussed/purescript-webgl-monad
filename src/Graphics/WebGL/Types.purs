@@ -4,6 +4,7 @@ import Control.Monad.Error.Trans (ErrorT ())
 import Control.Monad.Eff (Eff ())
 import Control.Monad.Reader.Trans (ReaderT ())
 import Graphics.Canvas (Canvas ())
+import Graphics.WebGL.Unsafe (unsafeAsNumber)
 
 import qualified Graphics.WebGL.Raw.Enums as Enum
 import qualified Graphics.WebGL.Raw.Types as Raw
@@ -52,8 +53,18 @@ data Mat4 = Mat4    Number Number Number Number
 
 -- attributes and uniforms
 
-data Attribute a = Attribute Number
-data Uniform a = Uniform Number
+class AsNumber a where
+  asNumber :: a -> Number
+
+data Attribute a
+
+instance asNumberAttribute :: AsNumber (Attribute a) where
+  asNumber = unsafeAsNumber
+
+data Uniform a
+
+instance asNumberUniform :: AsNumber (Uniform a) where
+  asNumber = unsafeAsNumber
 
 -- wrapped GLenums
 

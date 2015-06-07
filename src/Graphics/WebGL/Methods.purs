@@ -62,14 +62,14 @@ getProgramParameter prog param = do
       Nothing -> throwError $ NullValue "getProgramParameter"
 
 vertexAttrib1f :: Attribute Number -> Number -> WebGL Unit
-vertexAttrib1f (Attribute attr) x = do
+vertexAttrib1f attr x = do
     ctx <- ask
-    liftEff $ Raw.vertexAttrib1f ctx attr x
+    liftEff $ Raw.vertexAttrib1f ctx (asNumber attr) x
 
 vertexAttrib3f :: Attribute Number -> Number -> Number -> Number -> WebGL Unit
-vertexAttrib3f (Attribute attr) x y z = do
+vertexAttrib3f attr x y z = do
     ctx <- ask
-    liftEff $ Raw.vertexAttrib3f ctx attr x y z
+    liftEff $ Raw.vertexAttrib3f ctx (asNumber attr) x y z
 
 isContextLost :: WebGL Boolean
 isContextLost = ask >>= Raw.isContextLost >>> liftEff
