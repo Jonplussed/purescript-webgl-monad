@@ -98,7 +98,7 @@ foreign import getUniformBindingsImpl """
 
       try {
         unifs = {};
-        count = ctx.getProgramParameter(pro, ctx.ACTIVE_UNIFORMS);
+        count = ctx.getProgramParameter(prog, ctx.ACTIVE_UNIFORMS);
 
         for (var i = 0; i < count; i++) {
           unif = ctx.getActiveUniform(prog, i);
