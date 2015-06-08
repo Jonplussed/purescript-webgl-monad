@@ -61,12 +61,12 @@ getProgramParameter prog param = do
       Just val -> return val
       Nothing -> throwError $ NullValue "getProgramParameter"
 
-vertexAttrib1f :: Attribute Number -> Number -> WebGL Unit
+vertexAttrib1f :: forall a. Attribute a -> Number -> WebGL Unit
 vertexAttrib1f (Attribute attr) x = do
     ctx <- ask
     liftEff $ Raw.vertexAttrib1f ctx attr x
 
-vertexAttrib3f :: Attribute Number -> Number -> Number -> Number -> WebGL Unit
+vertexAttrib3f :: forall a. Attribute a -> Number -> Number -> Number -> WebGL Unit
 vertexAttrib3f (Attribute attr) x y z = do
     ctx <- ask
     liftEff $ Raw.vertexAttrib3f ctx attr x y z
