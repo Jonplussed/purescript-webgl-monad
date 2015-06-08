@@ -2,17 +2,24 @@
 
 ## Module Graphics.WebGL
 
-#### `debug`
-
-``` purescript
-debug :: WebGL Unit
-```
-
-
 #### `runWebgl`
 
 ``` purescript
 runWebgl :: forall eff a. WebGL a -> Raw.WebGLContext -> Eff (canvas :: Canvas | eff) (Either WebGLError a)
+```
+
+
+#### `runWebglWithShaders`
+
+``` purescript
+runWebglWithShaders :: forall eff attrs uniforms a. (WebGLProgram -> Object attrs -> Object uniforms -> WebGL a) -> WebGLContext -> String -> String -> Eff (canvas :: Canvas | eff) (Either WebGLError a)
+```
+
+
+#### `debug`
+
+``` purescript
+debug :: WebGL Unit
 ```
 
 
@@ -22,72 +29,21 @@ runWebgl :: forall eff a. WebGL a -> Raw.WebGLContext -> Eff (canvas :: Canvas |
 #### `defaultWebglContextAttrs`
 
 ``` purescript
-defaultWebglContextAttrs :: Raw.WebGLContextAttributes
+defaultWebglContextAttrs :: WebGLContextAttributes
 ```
 
 
 #### `getWebglContextWithAttrs`
 
 ``` purescript
-getWebglContextWithAttrs :: forall eff. CanvasElement -> Raw.WebGLContextAttributes -> Eff (canvas :: Canvas | eff) (Maybe Raw.WebGLContext)
+getWebglContextWithAttrs :: forall eff. CanvasElement -> WebGLContextAttributes -> Eff (canvas :: Canvas | eff) (Maybe WebGLContext)
 ```
 
 
 #### `getWebglContext`
 
 ``` purescript
-getWebglContext :: forall eff. CanvasElement -> Eff (canvas :: Canvas | eff) (Maybe Raw.WebGLContext)
-```
-
-
-
-## Module Graphics.WebGL.Math
-
-#### `Vec2`
-
-``` purescript
-data Vec2
-  = Vec2 Number Number
-```
-
-
-#### `Vec3`
-
-``` purescript
-data Vec3
-  = Vec3 Number Number Number
-```
-
-
-#### `Vec4`
-
-``` purescript
-data Vec4
-  = Vec4 Number Number Number Number
-```
-
-
-#### `Mat2`
-
-``` purescript
-data Mat2
-  = Mat2 Number Number Number Number
-```
-
-
-#### `Mat3`
-
-``` purescript
-data Mat3
-  = Mat3 Number Number Number Number Number Number Number Number Number
-```
-
-
-#### `Mat4`
-
-``` purescript
-data Mat4
-  = Mat4 Number Number Number Number Number Number Number Number Number Number Number Number Number Number Number Number
+getWebglContext :: forall eff. CanvasElement -> Eff (canvas :: Canvas | eff) (Maybe WebGLContext)
 ```
 
 
@@ -157,6 +113,20 @@ getProgramParameter :: forall a. WebGLProgram -> ProgramParam -> WebGL a
 ```
 
 
+#### `vertexAttrib1f`
+
+``` purescript
+vertexAttrib1f :: forall a. Attribute a -> Number -> WebGL Unit
+```
+
+
+#### `vertexAttrib3f`
+
+``` purescript
+vertexAttrib3f :: forall a. Attribute a -> Number -> Number -> Number -> WebGL Unit
+```
+
+
 #### `isContextLost`
 
 ``` purescript
@@ -188,11 +158,32 @@ useProgram :: WebGLProgram -> WebGL Unit
 
 ## Module Graphics.WebGL.Shader
 
-#### `programShaders`
+#### `compileShadersIntoProgram`
 
 ``` purescript
-programShaders :: String -> String -> WebGL Raw.WebGLProgram
+compileShadersIntoProgram :: String -> String -> WebGL WebGLProgram
 ```
+
+#### `addShaderToProgram`
+
+``` purescript
+addShaderToProgram :: WebGLProgram -> ShaderType -> String -> WebGL Unit
+```
+
+
+#### `getAttrBindings`
+
+``` purescript
+getAttrBindings :: forall bindings. WebGLProgram -> WebGL (Object bindings)
+```
+
+
+#### `getUniformBindings`
+
+``` purescript
+getUniformBindings :: forall bindings. WebGLProgram -> WebGL (Object bindings)
+```
+
 
 
 ## Module Graphics.WebGL.Types
@@ -246,6 +237,68 @@ type WebGLProgram = Raw.WebGLProgram
 
 ``` purescript
 type WebGLShader = Raw.WebGLShader
+```
+
+
+#### `Vec2`
+
+``` purescript
+data Vec2
+  = Vec2 Number Number
+```
+
+#### `Vec3`
+
+``` purescript
+data Vec3
+  = Vec3 Number Number Number
+```
+
+
+#### `Vec4`
+
+``` purescript
+data Vec4
+  = Vec4 Number Number Number Number
+```
+
+
+#### `Mat2`
+
+``` purescript
+data Mat2
+  = Mat2 Number Number Number Number
+```
+
+
+#### `Mat3`
+
+``` purescript
+data Mat3
+  = Mat3 Number Number Number Number Number Number Number Number Number
+```
+
+
+#### `Mat4`
+
+``` purescript
+data Mat4
+  = Mat4 Number Number Number Number Number Number Number Number Number Number Number Number Number Number Number Number
+```
+
+
+#### `Attribute`
+
+``` purescript
+data Attribute a
+  = Attribute Number
+```
+
+#### `Uniform`
+
+``` purescript
+data Uniform a
+  = Uniform Number
 ```
 
 
