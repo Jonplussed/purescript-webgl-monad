@@ -27,13 +27,6 @@ shaderLinkError = ShaderError "could not link shaders prog"
 
 -- public functions
 
-addShaderToProgram :: WebGLProgram -> ShaderType -> String -> WebGL Unit
-addShaderToProgram prog stype src = do
-    shader <- GL.createShader stype
-    GL.shaderSource shader src
-    GL.compileShader shader
-    GL.attachShader prog shader
-
 compileShadersIntoProgram :: String -> String -> WebGL WebGLProgram
 compileShadersIntoProgram vertSrc fragSrc = do
     prog <- GL.createProgram
@@ -46,6 +39,13 @@ compileShadersIntoProgram vertSrc fragSrc = do
 
     GL.useProgram prog
     return prog
+
+addShaderToProgram :: WebGLProgram -> ShaderType -> String -> WebGL Unit
+addShaderToProgram prog stype src = do
+    shader <- GL.createShader stype
+    GL.shaderSource shader src
+    GL.compileShader shader
+    GL.attachShader prog shader
 
 getAttrBindings :: forall bindings. WebGLProgram -> WebGL (Object bindings)
 getAttrBindings prog = do

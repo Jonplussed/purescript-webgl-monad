@@ -13,7 +13,18 @@ import qualified Graphics.WebGL.Raw.Enums as Enum
 import qualified Graphics.WebGL.Raw.Types as Raw
 
 import Graphics.WebGL.Methods
+import Graphics.WebGL.Shader
 import Graphics.WebGL.Types
+
+runWebgl :: forall eff a. WebGL a -> Raw.WebGLContext -> Eff (canvas :: Canvas | eff) (Either WebGLError a)
+runWebgl f ctx = runErrorT $ runReaderT f ctx
+
+runWebglWithShaders :: forall eff attrs uniforms a. (WebGLProgram -> Object attrs -> Object uniforms -> WebGL a) -> WebGLContext -> String -> String -> Eff (canvas :: Canvas | eff) (Either WebGLError a)
+runWebglWithShaders f ctx vertSrc fragSrc = runWebgl (do
+    prog <- compileShadersIntoProgram vertSrc fragSrc
+    attr <- getAttrBindings prog
+    unif <- getUniformBindings prog
+    f prog attr unif) ctx
 
 debug :: WebGL Unit
 debug = do
@@ -23,6 +34,3 @@ debug = do
   where
     hasErr NoError = false
     hasErr _       = true
-
-runWebgl :: forall eff a. WebGL a -> Raw.WebGLContext -> Eff (canvas :: Canvas | eff) (Either WebGLError a)
-runWebgl prog ctx = runErrorT $ runReaderT prog ctx
