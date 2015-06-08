@@ -77,7 +77,6 @@ foreign import getAttrBindingsImpl """
         for (var i = 0; i < count; i++) {
           attr = ctx.getActiveAttrib(prog, i);
           loc = ctx.getAttribLocation(prog, attr.name);
-          ctx.enableVertexAttribArray(loc);
           attrs[attr.name] = wrapper(loc);
         }
 
