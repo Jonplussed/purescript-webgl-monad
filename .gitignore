@@ -11,5 +11,5 @@ dist/
 cabal.sandbox.config
 node_modules/
 bower_components/
-.psci
+.psci*
 output/
