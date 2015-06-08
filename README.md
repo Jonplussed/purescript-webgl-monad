@@ -55,7 +55,7 @@ with helper functions. I'm a relative newcomer to graphics programming,
 however, so I don't know what all of these common uses _are_.
 
 That's where you come in. Help me implement common patterns by raising Github
-issues or providing pull requests! Together we can reign this chimeric state
+issues or providing pull requests! Together we can rein this chimeric state
 machine into some semblance of respectability.
 
 ## Differences from [purescript-webgl][2]
