@@ -47,6 +47,26 @@ getWebglContext :: forall eff. CanvasElement -> Eff (canvas :: Canvas | eff) (Ma
 ```
 
 
+#### `canvasElement`
+
+``` purescript
+canvasElement :: WebGL CanvasElement
+```
+
+#### `drawingBufferHeight`
+
+``` purescript
+drawingBufferHeight :: WebGL Number
+```
+
+
+#### `drawingBufferWidth`
+
+``` purescript
+drawingBufferWidth :: WebGL Number
+```
+
+
 
 ## Module Graphics.WebGL.Methods
 
@@ -113,20 +133,6 @@ getProgramParameter :: forall a. WebGLProgram -> ProgramParam -> WebGL a
 ```
 
 
-#### `vertexAttrib1f`
-
-``` purescript
-vertexAttrib1f :: forall a. Attribute a -> Number -> WebGL Unit
-```
-
-
-#### `vertexAttrib3f`
-
-``` purescript
-vertexAttrib3f :: forall a. Attribute a -> Number -> Number -> Number -> WebGL Unit
-```
-
-
 #### `isContextLost`
 
 ``` purescript
@@ -148,10 +154,31 @@ shaderSource :: WebGLShader -> String -> WebGL Unit
 ```
 
 
+#### `uniform4f`
+
+``` purescript
+uniform4f :: forall a. Uniform a -> Number -> Number -> Number -> Number -> WebGL Unit
+```
+
+
 #### `useProgram`
 
 ``` purescript
 useProgram :: WebGLProgram -> WebGL Unit
+```
+
+
+#### `vertexAttrib1f`
+
+``` purescript
+vertexAttrib1f :: forall a. Attribute a -> Number -> WebGL Unit
+```
+
+
+#### `vertexAttrib3f`
+
+``` purescript
+vertexAttrib3f :: forall a. Attribute a -> Number -> Number -> Number -> WebGL Unit
 ```
 
 
@@ -240,6 +267,13 @@ type WebGLShader = Raw.WebGLShader
 ```
 
 
+#### `WebGLUniformLocation`
+
+``` purescript
+type WebGLUniformLocation = Raw.WebGLUniformLocation
+```
+
+
 #### `Vec2`
 
 ``` purescript
@@ -298,7 +332,7 @@ data Attribute a
 
 ``` purescript
 data Uniform a
-  = Uniform Number
+  = Uniform WebGLUniformLocation
 ```
 
 
@@ -415,4 +449,14 @@ data ShaderType
 
 ``` purescript
 instance toWebglEnumShader :: ToWebGLEnum ShaderType
+```
+
+
+
+## Module Graphics.WebGL.Unsafe
+
+#### `unsafeCoerce`
+
+``` purescript
+unsafeCoerce :: forall a b. a -> b
 ```

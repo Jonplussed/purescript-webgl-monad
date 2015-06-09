@@ -61,16 +61,6 @@ getProgramParameter prog param = do
       Just val -> return val
       Nothing -> throwError $ NullValue "getProgramParameter"
 
-vertexAttrib1f :: forall a. Attribute a -> Number -> WebGL Unit
-vertexAttrib1f (Attribute attr) x = do
-    ctx <- ask
-    liftEff $ Raw.vertexAttrib1f ctx attr x
-
-vertexAttrib3f :: forall a. Attribute a -> Number -> Number -> Number -> WebGL Unit
-vertexAttrib3f (Attribute attr) x y z = do
-    ctx <- ask
-    liftEff $ Raw.vertexAttrib3f ctx attr x y z
-
 isContextLost :: WebGL Boolean
 isContextLost = ask >>= Raw.isContextLost >>> liftEff
 
@@ -84,7 +74,22 @@ shaderSource shader src = do
     ctx <- ask
     liftEff $ Raw.shaderSource ctx shader src
 
+uniform4f :: forall a. Uniform a -> Number -> Number -> Number -> Number -> WebGL Unit
+uniform4f (Uniform unif) x y z w = do
+    ctx <- ask
+    liftEff $ Raw.uniform4f ctx unif x y z w
+
 useProgram :: WebGLProgram -> WebGL Unit
 useProgram prog = do
     ctx <- ask
     liftEff $ Raw.useProgram ctx prog
+
+vertexAttrib1f :: forall a. Attribute a -> Number -> WebGL Unit
+vertexAttrib1f (Attribute attr) x = do
+    ctx <- ask
+    liftEff $ Raw.vertexAttrib1f ctx attr x
+
+vertexAttrib3f :: forall a. Attribute a -> Number -> Number -> Number -> WebGL Unit
+vertexAttrib3f (Attribute attr) x y z = do
+    ctx <- ask
+    liftEff $ Raw.vertexAttrib3f ctx attr x y z

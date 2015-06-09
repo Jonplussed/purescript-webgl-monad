@@ -31,6 +31,7 @@ type WebGLContext = Raw.WebGLContext
 type WebGLContextAttributes = Raw.WebGLContextAttributes
 type WebGLProgram = Raw.WebGLProgram
 type WebGLShader = Raw.WebGLShader
+type WebGLUniformLocation = Raw.WebGLUniformLocation
 
 -- math (this should and will come from a separate library)
 
@@ -53,7 +54,7 @@ data Mat4 = Mat4    Number Number Number Number
 -- attributes and uniforms
 
 data Attribute a = Attribute Number
-data Uniform a   = Uniform Number
+data Uniform a   = Uniform WebGLUniformLocation
 
 -- wrapped GLenums
 

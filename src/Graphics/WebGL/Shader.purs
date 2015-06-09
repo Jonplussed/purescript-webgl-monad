@@ -112,7 +112,7 @@ foreign import getUniformBindingsImpl """
       }
     };
   }
-""" :: forall eff bindings a. Fn3 WebGLContext WebGLProgram (Number -> Uniform a) (Eff (canvas :: Canvas | eff) (Object bindings))
+""" :: forall eff bindings a. Fn3 WebGLContext WebGLProgram (WebGLUniformLocation -> Uniform a) (Eff (canvas :: Canvas | eff) (Object bindings))
 
 getUniformBindings' :: forall eff bindings a. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) (Maybe (Object bindings))
 getUniformBindings' ctx prog = runFn3 getUniformBindingsImpl ctx prog Uniform >>= toMaybe >>> return
