@@ -68,19 +68,19 @@ getUniformBindings prog = do
 foreign import getAttrBindingsImpl """
   function getAttrBindingsImpl(ctx, prog, wrapper) {
     return function () {
-      var attr, attrs, count, loc;
+      var all, attr, count, loc;
 
       try {
-        attrs = {};
+        all = {};
         count = ctx.getProgramParameter(prog, ctx.ACTIVE_ATTRIBUTES);
 
         for (var i = 0; i < count; i++) {
           attr = ctx.getActiveAttrib(prog, i);
           loc = ctx.getAttribLocation(prog, attr.name);
-          attrs[attr.name] = wrapper(loc);
+          all[attr.name] = wrapper(loc);
         }
 
-        return attrs;
+        return all;
       } catch(e) {
         return null;
       }
@@ -94,19 +94,19 @@ getAttrBindings' ctx prog = runFn3 getAttrBindingsImpl ctx prog Attribute >>= to
 foreign import getUniformBindingsImpl """
   function getUniformBindingsImpl(ctx, prog, wrapper) {
     return function () {
-      var unif, unifs, count;
+      var all, unif, count, loc;
 
       try {
-        unifs = {};
+        all = {};
         count = ctx.getProgramParameter(prog, ctx.ACTIVE_UNIFORMS);
 
         for (var i = 0; i < count; i++) {
           unif = ctx.getActiveUniform(prog, i);
           loc = ctx.getUniformLocation(prog, unif.name);
-          unifs[unif.name] = wrapper(loc);
+          all[unif.name] = wrapper(loc);
         }
 
-        return unifs;
+        return all;
       } catch(e) {
         return null;
       }
