@@ -154,10 +154,59 @@ shaderSource :: WebGLShader -> String -> WebGL Unit
 ```
 
 
+#### `uniform1f`
+
+``` purescript
+uniform1f :: forall a. Uniform a -> Number -> WebGL Unit
+```
+
+
+#### `uniform1fv`
+
+``` purescript
+uniform1fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
+```
+
+
+#### `uniform2f`
+
+``` purescript
+uniform2f :: forall a. Uniform a -> Number -> Number -> WebGL Unit
+```
+
+
+#### `uniform2fv`
+
+``` purescript
+uniform2fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
+```
+
+
+#### `uniform3f`
+
+``` purescript
+uniform3f :: forall a. Uniform a -> Number -> Number -> Number -> WebGL Unit
+```
+
+
+#### `uniform3fv`
+
+``` purescript
+uniform3fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
+```
+
+
 #### `uniform4f`
 
 ``` purescript
 uniform4f :: forall a. Uniform a -> Number -> Number -> Number -> Number -> WebGL Unit
+```
+
+
+#### `uniform4fv`
+
+``` purescript
+uniform4fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
 ```
 
 
@@ -175,6 +224,27 @@ vertexAttrib1f :: forall a. Attribute a -> Number -> WebGL Unit
 ```
 
 
+#### `vertexAttrib1fv`
+
+``` purescript
+vertexAttrib1fv :: forall a. Attribute a -> Float32Array -> WebGL Unit
+```
+
+
+#### `vertexAttrib2f`
+
+``` purescript
+vertexAttrib2f :: forall a. Attribute a -> Number -> Number -> WebGL Unit
+```
+
+
+#### `vertexAttrib2fv`
+
+``` purescript
+vertexAttrib2fv :: forall a. Attribute a -> Float32Array -> WebGL Unit
+```
+
+
 #### `vertexAttrib3f`
 
 ``` purescript
@@ -182,8 +252,85 @@ vertexAttrib3f :: forall a. Attribute a -> Number -> Number -> Number -> WebGL U
 ```
 
 
+#### `vertexAttrib3fv`
+
+``` purescript
+vertexAttrib3fv :: forall a. Attribute a -> Float32Array -> WebGL Unit
+```
+
+
+#### `vertexAttrib4f`
+
+``` purescript
+vertexAttrib4f :: forall a. Attribute a -> Number -> Number -> Number -> Number -> WebGL Unit
+```
+
+
+#### `vertexAttrib4fv`
+
+``` purescript
+vertexAttrib4fv :: forall a. Attribute a -> Float32Array -> WebGL Unit
+```
+
+
 
 ## Module Graphics.WebGL.Shader
+
+#### `setVertAttrNumber`
+
+``` purescript
+instance setVertAttrNumber :: SetVertAttr Number
+```
+
+
+#### `setVertAttrVec2`
+
+``` purescript
+instance setVertAttrVec2 :: SetVertAttr Vec2
+```
+
+
+#### `setVertAttrVec3`
+
+``` purescript
+instance setVertAttrVec3 :: SetVertAttr Vec3
+```
+
+
+#### `setVertAttrVec4`
+
+``` purescript
+instance setVertAttrVec4 :: SetVertAttr Vec4
+```
+
+
+#### `setUniformNumber`
+
+``` purescript
+instance setUniformNumber :: SetUniform Number
+```
+
+
+#### `setUniformVec2`
+
+``` purescript
+instance setUniformVec2 :: SetUniform Vec2
+```
+
+
+#### `setUniformVec3`
+
+``` purescript
+instance setUniformVec3 :: SetUniform Vec3
+```
+
+
+#### `setUniformVec4`
+
+``` purescript
+instance setUniformVec4 :: SetUniform Vec4
+```
+
 
 #### `compileShadersIntoProgram`
 
@@ -215,10 +362,17 @@ getUniformBindings :: forall bindings. WebGLProgram -> WebGL (Object bindings)
 
 ## Module Graphics.WebGL.Types
 
+#### `WebGLT`
+
+``` purescript
+type WebGLT eff a = ReaderT Raw.WebGLContext (ErrorT WebGLError eff) a
+```
+
+
 #### `WebGL`
 
 ``` purescript
-type WebGL a = forall eff. ReaderT Raw.WebGLContext (ErrorT WebGLError (Eff (canvas :: Canvas | eff))) a
+type WebGL a = forall eff. WebGLT (Eff (canvas :: Canvas | eff)) a
 ```
 
 

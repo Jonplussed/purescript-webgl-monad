@@ -8,7 +8,8 @@ import Graphics.Canvas (Canvas ())
 import qualified Graphics.WebGL.Raw.Enums as Enum
 import qualified Graphics.WebGL.Raw.Types as Raw
 
-type WebGL a = forall eff. ReaderT Raw.WebGLContext (ErrorT WebGLError (Eff (canvas :: Canvas | eff))) a
+type WebGLT eff a = ReaderT Raw.WebGLContext (ErrorT WebGLError eff) a
+type WebGL a = forall eff. WebGLT (Eff (canvas :: Canvas | eff)) a
 
 data WebGLError
   = ContextLost

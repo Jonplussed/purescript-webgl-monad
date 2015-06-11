@@ -20,6 +20,36 @@ import qualified Graphics.WebGL.Raw.Types as Raw
 
 import Graphics.WebGL.Types
 
+class SetVertAttr a where
+  setVertAttr :: Attribute a -> a -> WebGL Unit
+
+instance setVertAttrNumber :: SetVertAttr Number where
+  setVertAttr attr x = GL.vertexAttrib1f attr x
+
+instance setVertAttrVec2 :: SetVertAttr Vec2 where
+  setVertAttr attr (Vec2 x y) = GL.vertexAttrib2f attr x y
+
+instance setVertAttrVec3 :: SetVertAttr Vec3 where
+  setVertAttr attr (Vec3 x y z) = GL.vertexAttrib3f attr x y z
+
+instance setVertAttrVec4 :: SetVertAttr Vec4 where
+  setVertAttr attr (Vec4 x y z w) = GL.vertexAttrib4f attr x y z w
+
+class SetUniform a where
+  setUniform :: Uniform a -> a -> WebGL Unit
+
+instance setUniformNumber :: SetUniform Number where
+  setUniform unif x = GL.uniform1f unif x
+
+instance setUniformVec2 :: SetUniform Vec2 where
+  setUniform unif (Vec2 x y) = GL.uniform2f unif x y
+
+instance setUniformVec3 :: SetUniform Vec3 where
+  setUniform unif (Vec3 x y z) = GL.uniform3f unif x y z
+
+instance setUniformVec4 :: SetUniform Vec4 where
+  setUniform unif (Vec4 x y z w) = GL.uniform4f unif x y z w
+
 -- constants
 
 shaderLinkError :: WebGLError
