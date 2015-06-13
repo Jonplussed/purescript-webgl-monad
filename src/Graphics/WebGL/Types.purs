@@ -95,6 +95,24 @@ instance toWebglEnumBufferUsage :: ToWebGLEnum BufferUsage where
   toWebglEnum StaticDraw  = Enum.staticDraw
   toWebglEnum StreamDraw  = Enum.streamDraw
 
+data DataType
+  = Byte
+  | UnsignedByte
+  | Short
+  | UnsignedShort
+  | Int
+  | UnsignedInt
+  | Float
+
+instance toWebglEnumDataType :: ToWebGLEnum DataType where
+  toWebglEnum Byte          = Enum.byte
+  toWebglEnum UnsignedByte  = Enum.unsignedByte
+  toWebglEnum Short         = Enum.short
+  toWebglEnum UnsignedShort = Enum.unsignedShort
+  toWebglEnum Int           = Enum.int
+  toWebglEnum UnsignedInt   = Enum.unsignedInt
+  toWebglEnum Float         = Enum.float
+
 data DrawMode
   = Points
   | Lines

@@ -94,42 +94,42 @@ shaderSource shader src = do
     ctx <- ask
     liftEff $ Raw.shaderSource ctx shader src
 
-uniform1f :: forall a. Uniform a -> Number -> WebGL Unit
+uniform1f :: forall u. Uniform u -> Number -> WebGL Unit
 uniform1f (Uniform attr) x = do
     ctx <- ask
     liftEff $ Raw.uniform1f ctx attr x
 
-uniform1fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
+uniform1fv :: forall u. Uniform u -> Float32Array -> WebGL Unit
 uniform1fv (Uniform attr) xs = do
     ctx <- ask
     liftEff $ Raw.uniform1fv_ ctx attr xs
 
-uniform2f :: forall a. Uniform a -> Number -> Number -> WebGL Unit
+uniform2f :: forall u. Uniform u -> Number -> Number -> WebGL Unit
 uniform2f (Uniform attr) x y = do
     ctx <- ask
     liftEff $ Raw.uniform2f ctx attr x y
 
-uniform2fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
+uniform2fv :: forall u. Uniform u -> Float32Array -> WebGL Unit
 uniform2fv (Uniform attr) xs = do
     ctx <- ask
     liftEff $ Raw.uniform2fv_ ctx attr xs
 
-uniform3f :: forall a. Uniform a -> Number -> Number -> Number -> WebGL Unit
+uniform3f :: forall u. Uniform u -> Number -> Number -> Number -> WebGL Unit
 uniform3f (Uniform attr) x y z = do
     ctx <- ask
     liftEff $ Raw.uniform3f ctx attr x y z
 
-uniform3fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
+uniform3fv :: forall u. Uniform u -> Float32Array -> WebGL Unit
 uniform3fv (Uniform attr) xs = do
     ctx <- ask
     liftEff $ Raw.uniform3fv_ ctx attr xs
 
-uniform4f :: forall a. Uniform a -> Number -> Number -> Number -> Number -> WebGL Unit
+uniform4f :: forall u. Uniform u -> Number -> Number -> Number -> Number -> WebGL Unit
 uniform4f (Uniform attr) x y z w = do
     ctx <- ask
     liftEff $ Raw.uniform4f ctx attr x y z w
 
-uniform4fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
+uniform4fv :: forall u. Uniform u -> Float32Array -> WebGL Unit
 uniform4fv (Uniform attr) xs = do
     ctx <- ask
     liftEff $ Raw.uniform4fv_ ctx attr xs
@@ -178,3 +178,8 @@ vertexAttrib4fv :: forall a. Attribute a -> Float32Array -> WebGL Unit
 vertexAttrib4fv (Attribute a) xs = do
     ctx <- ask
     liftEff $ Raw.vertexAttrib4fv_ ctx a xs
+
+vertexAttribPointer :: forall a. Attribute a -> Number -> DataType -> Boolean -> Number -> Number -> WebGL Unit
+vertexAttribPointer (Attribute attr) size dtype isNormalized stride offset = do
+    ctx <- ask
+    liftEff $ Raw.vertexAttribPointer ctx attr size (toWebglEnum dtype) isNormalized stride offset

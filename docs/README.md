@@ -178,56 +178,56 @@ shaderSource :: WebGLShader -> String -> WebGL Unit
 #### `uniform1f`
 
 ``` purescript
-uniform1f :: forall a. Uniform a -> Number -> WebGL Unit
+uniform1f :: forall u. Uniform u -> Number -> WebGL Unit
 ```
 
 
 #### `uniform1fv`
 
 ``` purescript
-uniform1fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
+uniform1fv :: forall u. Uniform u -> Float32Array -> WebGL Unit
 ```
 
 
 #### `uniform2f`
 
 ``` purescript
-uniform2f :: forall a. Uniform a -> Number -> Number -> WebGL Unit
+uniform2f :: forall u. Uniform u -> Number -> Number -> WebGL Unit
 ```
 
 
 #### `uniform2fv`
 
 ``` purescript
-uniform2fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
+uniform2fv :: forall u. Uniform u -> Float32Array -> WebGL Unit
 ```
 
 
 #### `uniform3f`
 
 ``` purescript
-uniform3f :: forall a. Uniform a -> Number -> Number -> Number -> WebGL Unit
+uniform3f :: forall u. Uniform u -> Number -> Number -> Number -> WebGL Unit
 ```
 
 
 #### `uniform3fv`
 
 ``` purescript
-uniform3fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
+uniform3fv :: forall u. Uniform u -> Float32Array -> WebGL Unit
 ```
 
 
 #### `uniform4f`
 
 ``` purescript
-uniform4f :: forall a. Uniform a -> Number -> Number -> Number -> Number -> WebGL Unit
+uniform4f :: forall u. Uniform u -> Number -> Number -> Number -> Number -> WebGL Unit
 ```
 
 
 #### `uniform4fv`
 
 ``` purescript
-uniform4fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
+uniform4fv :: forall u. Uniform u -> Float32Array -> WebGL Unit
 ```
 
 
@@ -291,6 +291,13 @@ vertexAttrib4f :: forall a. Attribute a -> Number -> Number -> Number -> Number 
 
 ``` purescript
 vertexAttrib4fv :: forall a. Attribute a -> Float32Array -> WebGL Unit
+```
+
+
+#### `vertexAttribPointer`
+
+``` purescript
+vertexAttribPointer :: forall a. Attribute a -> Number -> DataType -> Boolean -> Number -> Number -> WebGL Unit
 ```
 
 
@@ -580,6 +587,27 @@ data BufferUsage
 
 ``` purescript
 instance toWebglEnumBufferUsage :: ToWebGLEnum BufferUsage
+```
+
+
+#### `DataType`
+
+``` purescript
+data DataType
+  = Byte 
+  | UnsignedByte 
+  | Short 
+  | UnsignedShort 
+  | Int 
+  | UnsignedInt 
+  | Float 
+```
+
+
+#### `toWebglEnumDataType`
+
+``` purescript
+instance toWebglEnumDataType :: ToWebGLEnum DataType
 ```
 
 
