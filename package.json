@@ -1,5 +1,5 @@
 {
-  "name":         "purescript-webgl",
+  "name":         "purescript-webgl-monad",
   "description":  "a monad for WebGL methods",
   "version":      "0.1.0",
   "license":      "MIT",

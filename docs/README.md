@@ -77,6 +77,20 @@ attachShader :: WebGLProgram -> WebGLShader -> WebGL Unit
 ```
 
 
+#### `bindBuffer`
+
+``` purescript
+bindBuffer :: ArrayBufferType -> WebGLBuffer -> WebGL Unit
+```
+
+
+#### `bufferData`
+
+``` purescript
+bufferData :: ArrayBufferType -> BufferData -> BufferUsage -> WebGL Unit
+```
+
+
 #### `clear`
 
 ``` purescript
@@ -95,6 +109,13 @@ clearColor :: Number -> Number -> Number -> Number -> WebGL Unit
 
 ``` purescript
 compileShader :: WebGLShader -> WebGL Unit
+```
+
+
+#### `createBuffer`
+
+``` purescript
+createBuffer :: WebGL WebGLBuffer
 ```
 
 
@@ -394,11 +415,18 @@ instance showWebGLError :: Show WebGLError
 ```
 
 
+#### `WebGLBuffer`
+
+``` purescript
+type WebGLBuffer = Raw.WebGLBuffer
+```
+
 #### `WebGLContext`
 
 ``` purescript
 type WebGLContext = Raw.WebGLContext
 ```
+
 
 #### `WebGLContextAttributes`
 
@@ -478,14 +506,14 @@ data Mat4
 #### `Attribute`
 
 ``` purescript
-data Attribute a
+newtype Attribute a
   = Attribute Number
 ```
 
 #### `Uniform`
 
 ``` purescript
-data Uniform a
+newtype Uniform a
   = Uniform WebGLUniformLocation
 ```
 
@@ -505,6 +533,22 @@ class FromWebGLEnum a where
 ```
 
 
+#### `ArrayBufferType`
+
+``` purescript
+data ArrayBufferType
+  = ArrayBuffer 
+  | ElementArrayBuffer 
+```
+
+
+#### `toWebglEnumArrayBufferType`
+
+``` purescript
+instance toWebglEnumArrayBufferType :: ToWebGLEnum ArrayBufferType
+```
+
+
 #### `BufferType`
 
 ``` purescript
@@ -519,6 +563,23 @@ data BufferType
 
 ``` purescript
 instance toWebglEnumBufferType :: ToWebGLEnum BufferType
+```
+
+
+#### `BufferUsage`
+
+``` purescript
+data BufferUsage
+  = DynamicDraw 
+  | StaticDraw 
+  | StreamDraw 
+```
+
+
+#### `toWebglEnumBufferUsage`
+
+``` purescript
+instance toWebglEnumBufferUsage :: ToWebGLEnum BufferUsage
 ```
 
 
@@ -605,6 +666,14 @@ data ShaderType
 instance toWebglEnumShader :: ToWebGLEnum ShaderType
 ```
 
+
+#### `BufferData`
+
+``` purescript
+data BufferData
+  = DataSize Number
+  | DataSource Float32Array
+```
 
 
 ## Module Graphics.WebGL.Unsafe

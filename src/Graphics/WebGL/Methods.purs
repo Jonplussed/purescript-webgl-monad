@@ -15,6 +15,18 @@ attachShader prog shader = do
     ctx <- ask
     liftEff $ Raw.attachShader ctx prog shader
 
+bindBuffer :: ArrayBufferType -> WebGLBuffer -> WebGL Unit
+bindBuffer btype buffer = do
+    ctx <- ask
+    liftEff $ Raw.bindBuffer ctx (toWebglEnum btype) buffer
+
+bufferData :: ArrayBufferType -> BufferData -> BufferUsage -> WebGL Unit
+bufferData btype datatype usage = do
+    ctx <- ask
+    liftEff $ case datatype of
+      (DataSource ns) -> Raw.bufferData ctx (toWebglEnum btype) ns (toWebglEnum usage)
+      (DataSize n)    -> Raw.bufferData_ ctx (toWebglEnum btype) n (toWebglEnum usage)
+
 clear :: BufferType -> WebGL Unit
 clear buffer = do
     ctx <- ask
@@ -29,6 +41,13 @@ compileShader :: WebGLShader -> WebGL Unit
 compileShader shader = do
     ctx <- ask
     liftEff $ Raw.compileShader ctx shader
+
+createBuffer :: WebGL WebGLBuffer
+createBuffer = do
+    result <- ask >>= Raw.createBuffer >>> liftEff
+    case result of
+      Just buffer -> return buffer
+      Nothing -> throwError $ NullValue "createBuffer"
 
 createProgram :: WebGL WebGLProgram
 createProgram = do
@@ -83,7 +102,7 @@ uniform1f (Uniform attr) x = do
 uniform1fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
 uniform1fv (Uniform attr) xs = do
     ctx <- ask
-    liftEff $ Raw.uniform1fv ctx attr xs
+    liftEff $ Raw.uniform1fv_ ctx attr xs
 
 uniform2f :: forall a. Uniform a -> Number -> Number -> WebGL Unit
 uniform2f (Uniform attr) x y = do
@@ -93,7 +112,7 @@ uniform2f (Uniform attr) x y = do
 uniform2fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
 uniform2fv (Uniform attr) xs = do
     ctx <- ask
-    liftEff $ Raw.uniform2fv ctx attr xs
+    liftEff $ Raw.uniform2fv_ ctx attr xs
 
 uniform3f :: forall a. Uniform a -> Number -> Number -> Number -> WebGL Unit
 uniform3f (Uniform attr) x y z = do
@@ -103,7 +122,7 @@ uniform3f (Uniform attr) x y z = do
 uniform3fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
 uniform3fv (Uniform attr) xs = do
     ctx <- ask
-    liftEff $ Raw.uniform3fv ctx attr xs
+    liftEff $ Raw.uniform3fv_ ctx attr xs
 
 uniform4f :: forall a. Uniform a -> Number -> Number -> Number -> Number -> WebGL Unit
 uniform4f (Uniform attr) x y z w = do
@@ -113,7 +132,7 @@ uniform4f (Uniform attr) x y z w = do
 uniform4fv :: forall a. Uniform a -> Float32Array -> WebGL Unit
 uniform4fv (Uniform attr) xs = do
     ctx <- ask
-    liftEff $ Raw.uniform4fv ctx attr xs
+    liftEff $ Raw.uniform4fv_ ctx attr xs
 
 useProgram :: WebGLProgram -> WebGL Unit
 useProgram prog = do
@@ -128,7 +147,7 @@ vertexAttrib1f (Attribute a) x = do
 vertexAttrib1fv :: forall a. Attribute a -> Float32Array -> WebGL Unit
 vertexAttrib1fv (Attribute a) xs = do
     ctx <- ask
-    liftEff $ Raw.vertexAttrib1fv ctx a xs
+    liftEff $ Raw.vertexAttrib1fv_ ctx a xs
 
 vertexAttrib2f :: forall a. Attribute a -> Number -> Number -> WebGL Unit
 vertexAttrib2f (Attribute a) x y = do
@@ -138,7 +157,7 @@ vertexAttrib2f (Attribute a) x y = do
 vertexAttrib2fv :: forall a. Attribute a -> Float32Array -> WebGL Unit
 vertexAttrib2fv (Attribute a) xs = do
     ctx <- ask
-    liftEff $ Raw.vertexAttrib2fv ctx a xs
+    liftEff $ Raw.vertexAttrib2fv_ ctx a xs
 
 vertexAttrib3f :: forall a. Attribute a -> Number -> Number -> Number -> WebGL Unit
 vertexAttrib3f (Attribute a) x y z = do
@@ -148,7 +167,7 @@ vertexAttrib3f (Attribute a) x y z = do
 vertexAttrib3fv :: forall a. Attribute a -> Float32Array -> WebGL Unit
 vertexAttrib3fv (Attribute a) xs = do
     ctx <- ask
-    liftEff $ Raw.vertexAttrib3fv ctx a xs
+    liftEff $ Raw.vertexAttrib3fv_ ctx a xs
 
 vertexAttrib4f :: forall a. Attribute a -> Number -> Number -> Number -> Number -> WebGL Unit
 vertexAttrib4f (Attribute a) x y z w = do
@@ -158,4 +177,4 @@ vertexAttrib4f (Attribute a) x y z w = do
 vertexAttrib4fv :: forall a. Attribute a -> Float32Array -> WebGL Unit
 vertexAttrib4fv (Attribute a) xs = do
     ctx <- ask
-    liftEff $ Raw.vertexAttrib4fv ctx a xs
+    liftEff $ Raw.vertexAttrib4fv_ ctx a xs

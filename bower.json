@@ -1,5 +1,5 @@
 {
-  "name":         "purescript-webgl",
+  "name":         "purescript-webgl-monad",
   "description":  "a monad for WebGL methods",
   "version":      "0.1.0",
   "license":      "MIT",
@@ -19,6 +19,6 @@
     "purescript-monad-eff":             "0.1.*",
     "purescript-transformers":          "0.5.*",
     "purescript-typedarray":            "0.3.*",
-    "purescript-webgl-raw":             "git@github.com:Jonplussed/purescript-webgl-raw.git"
+    "purescript-webgl-raw":             "git@github.com:Jonplussed/purescript-webgl-raw.git#master"
   }
 }

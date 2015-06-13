@@ -3,6 +3,7 @@ module Graphics.WebGL.Types where
 import Control.Monad.Error.Trans (ErrorT ())
 import Control.Monad.Eff (Eff ())
 import Control.Monad.Reader.Trans (ReaderT ())
+import Data.ArrayBuffer.Types (Float32Array ())
 import Graphics.Canvas (Canvas ())
 
 import qualified Graphics.WebGL.Raw.Enums as Enum
@@ -28,11 +29,12 @@ instance showWebGLError :: Show WebGLError where
 
 -- re-exported from Raw
 
-type WebGLContext = Raw.WebGLContext
+type WebGLBuffer            = Raw.WebGLBuffer
+type WebGLContext           = Raw.WebGLContext
 type WebGLContextAttributes = Raw.WebGLContextAttributes
-type WebGLProgram = Raw.WebGLProgram
-type WebGLShader = Raw.WebGLShader
-type WebGLUniformLocation = Raw.WebGLUniformLocation
+type WebGLProgram           = Raw.WebGLProgram
+type WebGLShader            = Raw.WebGLShader
+type WebGLUniformLocation   = Raw.WebGLUniformLocation
 
 -- math (this should and will come from a separate library)
 
@@ -54,8 +56,8 @@ data Mat4 = Mat4    Number Number Number Number
 
 -- attributes and uniforms
 
-data Attribute a = Attribute Number
-data Uniform a   = Uniform WebGLUniformLocation
+newtype Attribute a = Attribute Number
+newtype Uniform a   = Uniform WebGLUniformLocation
 
 -- wrapped GLenums
 
@@ -64,6 +66,14 @@ class ToWebGLEnum a where
 
 class FromWebGLEnum a where
   fromWebglEnum :: Number -> a
+
+data ArrayBufferType
+  = ArrayBuffer
+  | ElementArrayBuffer
+
+instance toWebglEnumArrayBufferType :: ToWebGLEnum ArrayBufferType where
+  toWebglEnum ArrayBuffer        = Enum.arrayBuffer
+  toWebglEnum ElementArrayBuffer = Enum.elementArrayBuffer
 
 data BufferType
   = DepthBuffer
@@ -74,6 +84,16 @@ instance toWebglEnumBufferType :: ToWebGLEnum BufferType where
   toWebglEnum DepthBuffer   = Enum.depthBufferBit
   toWebglEnum ColorBuffer   = Enum.colorBufferBit
   toWebglEnum StencilBuffer = Enum.stencilBufferBit
+
+data BufferUsage
+  = DynamicDraw
+  | StaticDraw
+  | StreamDraw
+
+instance toWebglEnumBufferUsage :: ToWebGLEnum BufferUsage where
+  toWebglEnum DynamicDraw = Enum.dynamicDraw
+  toWebglEnum StaticDraw  = Enum.staticDraw
+  toWebglEnum StreamDraw  = Enum.streamDraw
 
 data DrawMode
   = Points
@@ -140,3 +160,9 @@ data ShaderType
 instance toWebglEnumShader :: ToWebGLEnum ShaderType where
   toWebglEnum FragmentShader = Enum.fragmentShader
   toWebglEnum VertexShader   = Enum.vertexShader
+
+-- params for polymorphic raw functions
+
+data BufferData
+  = DataSize Number
+  | DataSource Float32Array
