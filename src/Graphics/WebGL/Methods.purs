@@ -70,6 +70,11 @@ drawArrays mode first count = do
     ctx <- ask
     liftEff $ Raw.drawArrays ctx (toWebglEnum mode) first count
 
+enableVertexAttribArray :: forall a. Attribute a -> WebGL Unit
+enableVertexAttribArray (Attribute attr) = do
+    ctx <- ask
+    liftEff $ Raw.enableVertexAttribArray ctx attr
+
 getError :: WebGL Number
 getError = ask >>= Raw.getError >>> liftEff
 

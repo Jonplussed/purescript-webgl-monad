@@ -140,6 +140,13 @@ drawArrays :: DrawMode -> Number -> Number -> WebGL Unit
 ```
 
 
+#### `enableVertexAttribArray`
+
+``` purescript
+enableVertexAttribArray :: forall a. Attribute a -> WebGL Unit
+```
+
+
 #### `getError`
 
 ``` purescript
@@ -360,16 +367,16 @@ instance setUniformVec4 :: SetUniform Vec4
 ```
 
 
-#### `compileShadersIntoProgram`
-
-``` purescript
-compileShadersIntoProgram :: String -> String -> WebGL WebGLProgram
-```
-
 #### `addShaderToProgram`
 
 ``` purescript
 addShaderToProgram :: WebGLProgram -> ShaderType -> String -> WebGL Unit
+```
+
+#### `compileShadersIntoProgram`
+
+``` purescript
+compileShadersIntoProgram :: String -> String -> WebGL WebGLProgram
 ```
 
 

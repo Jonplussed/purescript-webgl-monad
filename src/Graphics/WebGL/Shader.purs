@@ -57,6 +57,13 @@ shaderLinkError = ShaderError "could not link shaders prog"
 
 -- public functions
 
+addShaderToProgram :: WebGLProgram -> ShaderType -> String -> WebGL Unit
+addShaderToProgram prog stype src = do
+    shader <- GL.createShader stype
+    GL.shaderSource shader src
+    GL.compileShader shader
+    GL.attachShader prog shader
+
 compileShadersIntoProgram :: String -> String -> WebGL WebGLProgram
 compileShadersIntoProgram vertSrc fragSrc = do
     prog <- GL.createProgram
@@ -70,17 +77,10 @@ compileShadersIntoProgram vertSrc fragSrc = do
     GL.useProgram prog
     return prog
 
-addShaderToProgram :: WebGLProgram -> ShaderType -> String -> WebGL Unit
-addShaderToProgram prog stype src = do
-    shader <- GL.createShader stype
-    GL.shaderSource shader src
-    GL.compileShader shader
-    GL.attachShader prog shader
-
 getAttrBindings :: forall bindings. WebGLProgram -> WebGL (Object bindings)
 getAttrBindings prog = do
     ctx <- ask
-    result <- liftEff $ getAttrBindings' ctx prog
+    result <- liftEff $ getAttrBindings_ ctx prog
     case result of
       Just val -> return val
       Nothing -> throwError $ NullValue "getAttrBindings"
@@ -88,7 +88,7 @@ getAttrBindings prog = do
 getUniformBindings :: forall bindings. WebGLProgram -> WebGL (Object bindings)
 getUniformBindings prog = do
     ctx <- ask
-    result <- liftEff $ getUniformBindings' ctx prog
+    result <- liftEff $ getUniformBindings_ ctx prog
     case result of
       Just val -> return val
       Nothing -> throwError $ NullValue "getUniformBindings"
@@ -118,8 +118,8 @@ foreign import getAttrBindingsImpl """
   }
 """ :: forall eff bindings a. Fn3 WebGLContext WebGLProgram (Number -> Attribute a) (Eff (canvas :: Canvas | eff) (Object bindings))
 
-getAttrBindings' :: forall eff bindings a. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) (Maybe (Object bindings))
-getAttrBindings' ctx prog = runFn3 getAttrBindingsImpl ctx prog Attribute >>= toMaybe >>> return
+getAttrBindings_ :: forall eff bindings a. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) (Maybe (Object bindings))
+getAttrBindings_ ctx prog = runFn3 getAttrBindingsImpl ctx prog Attribute >>= toMaybe >>> return
 
 foreign import getUniformBindingsImpl """
   function getUniformBindingsImpl(ctx, prog, wrapper) {
@@ -144,5 +144,5 @@ foreign import getUniformBindingsImpl """
   }
 """ :: forall eff bindings a. Fn3 WebGLContext WebGLProgram (WebGLUniformLocation -> Uniform a) (Eff (canvas :: Canvas | eff) (Object bindings))
 
-getUniformBindings' :: forall eff bindings a. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) (Maybe (Object bindings))
-getUniformBindings' ctx prog = runFn3 getUniformBindingsImpl ctx prog Uniform >>= toMaybe >>> return
+getUniformBindings_ :: forall eff bindings a. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) (Maybe (Object bindings))
+getUniformBindings_ ctx prog = runFn3 getUniformBindingsImpl ctx prog Uniform >>= toMaybe >>> return
